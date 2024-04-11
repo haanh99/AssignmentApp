@@ -14,5 +14,6 @@ namespace AssignmentApp.Models
 		public int Age { get; set; }
 		[Required]
 		public String? Majo { get; set; }
-	}
+        public ICollection<CourseEnrollment> Enrollments { get; set; }
+    }
 }
