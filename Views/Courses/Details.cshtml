@@ -1,4 +1,4 @@
-﻿@model AssignmentApp.Models.StudentEntity
+﻿@model AssignmentApp.Models.Course
 
 @{
     ViewData["Title"] = "Details";
@@ -7,7 +7,7 @@
 <h1>Details</h1>
 
 <div>
-    <h4>StudentEntity</h4>
+    <h4>Course</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -17,18 +17,17 @@
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Age)
+            @Html.DisplayNameFor(model => model.StartTime)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Age)
+            @Html.DisplayFor(model => model.StartTime)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Majo)
+            @Html.DisplayNameFor(model => model.EndTime)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Majo)
+            @Html.DisplayFor(model => model.EndTime)
         </dd>
-       
     </dl>
 </div>
 <div>
