@@ -26,20 +26,20 @@ namespace AssignmentApp.Data
             }
             context.SaveChanges();
 
-            var courses = new Course[]
+            var courses = new Courses[]
             {
-                new Course {Name = "ITCourse01", StartTime = new DateTime(2022, 1, 10, 9, 0, 0),
+                new Courses {Name = "ITCourse01", StartTime = new DateTime(2022, 1, 10, 9, 0, 0),
                 EndTime = new DateTime(2022, 1, 10, 11, 0, 0)
                 },
-                new Course {Name = "ITCourse02",
+                new Courses {Name = "ITCourse02",
                 StartTime = new DateTime(2022, 1, 11, 14, 0, 0),
                 EndTime = new DateTime(2022, 1, 11, 16, 0, 0)
                 },
-                new Course {Name = "MKCourse01",
+                new Courses {Name = "MKCourse01",
                 StartTime = new DateTime(2022, 1, 11, 14, 0, 0),
                 EndTime = new DateTime(2022, 1, 11, 16, 0, 0)
                 },
-                new Course {Name = "DSCourse01",
+                new Courses {Name = "DSCourse01",
                 StartTime = new DateTime(2022, 1, 11, 14, 0, 0),
                 EndTime = new DateTime(2022, 1, 11, 16, 0, 0)
                 },
@@ -47,7 +47,7 @@ namespace AssignmentApp.Data
 
             };
 
-            foreach (Course c in courses)
+            foreach (Courses c in courses)
             {
                 context.Add(c);
             }

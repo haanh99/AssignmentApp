@@ -13,7 +13,7 @@ namespace AssignmentApp.Models
         public int CourseID { get; set; }
         public int StudentID { get; set; }
 
-        public Course Course { get; set; }
+        public Courses Course { get; set; }
         public StudentEntity Student { get; set; }
 
 

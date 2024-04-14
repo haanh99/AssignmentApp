@@ -15,9 +15,10 @@ namespace AssignmentApp.Data
         }
         public DbSet<StudentEntity> Student { get; set; }
 
-        public DbSet<ApplicationUser> AppUser { get; set; }
-        public DbSet<Course> Courses { get; set; }
+     
+        public DbSet<Courses> Courses { get; set; }
         public DbSet<CourseEnrollment> Enrollments { get; set; }
+       
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{

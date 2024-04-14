@@ -21,12 +21,26 @@ namespace AssignmentApp.Controllers
         {
             _context = context;
         }
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
 
-        // GET: Student
-        //public async Task<IActionResult> Index()
-        //{
-        //    return View(await _context.Student.ToListAsync());
-        //}
+        [HttpPost]
+        public async Task<IActionResult> Create(StudentEntity model)
+        {
+             var student = new StudentEntity
+                {
+                    Name = model.Name,
+                    Age = model.Age,
+                    Majo = model.Majo,
+                };
+                await _context.Student.AddAsync(student);
+                await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "Student");
+        }
+      
         public async Task<IActionResult> Index(string sortOrder, string searchString, string currentFilter, int? pageNumber)
         {
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
@@ -39,8 +53,8 @@ namespace AssignmentApp.Controllers
                 searchString = currentFilter;
             }
             ViewData["CurrentFilter"] = searchString;
-            var students = from s in _context.Student
-                           select s;
+            var students = from StudentEntity in _context.Student
+                           select StudentEntity;
             if (!String.IsNullOrEmpty(searchString))
             {
                 students = students.Where(s => s.Name.Contains(searchString)
@@ -61,6 +75,7 @@ namespace AssignmentApp.Controllers
         }
 
         // GET: Student/Details/5
+        [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -77,100 +92,34 @@ namespace AssignmentApp.Controllers
 
             return View(studentEntity);
         }
-
-        // GET: Student/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Student/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Age,Majo")] StudentEntity studentEntity)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(studentEntity);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(studentEntity);
-        }
-
-        // GET: Student/Edit/5
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var studentEntity = await _context.Student.FindAsync(id);
-        //    if (studentEntity == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(studentEntity);
-        //}
-
-        // POST: Student/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var studentToUpdate = await _context.Student.FirstOrDefaultAsync(s => s.Id == id);
-            if (await TryUpdateModelAsync<StudentEntity>(
-                studentToUpdate,
-                "",
-                s => s.Name, s => s.Age, s => s.Majo))
+
+            var studentEntity = await _context.Student.FindAsync(id);
+            if (studentEntity == null)
             {
-                try
-                {
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (DbUpdateException /* ex */)
-                {
-                    //Log the error (uncomment ex variable name and write a log.)
-                    ModelState.AddModelError("", "Unable to save changes. " +
-                        "Try again, and if the problem persists, " +
-                        "see your system administrator.");
-                }
-            }
-            return View(studentToUpdate);
+               return NotFound();
+           }
+            return View(studentEntity);
         }
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Age,Majo")] StudentEntity student)
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(StudentEntity student)
         {
-            if (id != student.Id)
+            var Stu = await _context.Student.FindAsync(student.Id);
+            if (Stu is not null)
             {
-                return NotFound();
+                Stu.Name = student.Name;
+                Stu.Age = student.Age;
+                Stu.Majo = student.Majo;
+                await _context.SaveChangesAsync();
             }
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(student);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (DbUpdateException /* ex */)
-                {
-                    //Log the error (uncomment ex variable name and write a log.)
-                    ModelState.AddModelError("", "Unable to save changes. " +
-                        "Try again, and if the problem persists, " +
-                        "see your system administrator.");
-                }
-            }
-            return View(student);
+            return RedirectToAction("Index","Student");
         }
         // GET: Student/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -192,7 +141,7 @@ namespace AssignmentApp.Controllers
 
         // POST: Student/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+      
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var studentEntity = await _context.Student.FindAsync(id);

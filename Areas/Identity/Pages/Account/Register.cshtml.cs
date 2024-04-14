@@ -79,14 +79,7 @@ namespace AssignmentApp.Areas.Identity.Pages.Account
         /// </summary>
         public class InputModel
         {
-            [Required]
-     
-            [Display(Name = "FirstName")]
-            public string Firstname { get; set; }
-            [Required]
-
-            [Display(Name = "LastName")]
-            public string Lastname { get; set; }
+            
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -148,8 +141,7 @@ namespace AssignmentApp.Areas.Identity.Pages.Account
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
 
-                user.FirstName = Input.Firstname;
-                user.LastName = Input.Lastname;
+                
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
@@ -190,11 +182,11 @@ namespace AssignmentApp.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private ApplicationUser CreateUser()
+        private IdentityUser CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<ApplicationUser>();
+                return Activator.CreateInstance<IdentityUser>();
             }
             catch
             {
