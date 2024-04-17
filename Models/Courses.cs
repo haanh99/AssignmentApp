@@ -1,4 +1,6 @@
-﻿namespace AssignmentApp.Models
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
+namespace AssignmentApp.Models
 {
     public class Courses
     {
@@ -7,5 +9,7 @@
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public ICollection<CourseEnrollment> Enrollments { get; set; }
+        public string ImageFile { get; set; }
+
     }
 }

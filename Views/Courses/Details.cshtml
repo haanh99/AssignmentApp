@@ -28,6 +28,16 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.EndTime)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ImageFile)
+        </dt>
+        @if (Model.ImageFile != null)
+        {
+            <div>
+                <h4>Image</h4>
+                <img src="@Url.Content("~/uploads/" + Model.ImageFile)" alt="Course Image" class="img-fluid rounded" style="max-width: 400px;" />
+            </div>
+        }
     </dl>
 </div>
 <div>
